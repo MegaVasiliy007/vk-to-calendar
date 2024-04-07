@@ -33,11 +33,14 @@ export default async () => {
 			startInputType: 'utc',
 			...(i.finish_date ? { end: i.finish_date * 1000 } : { duration: { hours: 6 } }),
 			title: i.name,
-			description: i.description,
+			description: i.description.replaceAll('"', ''),
 			...(i.addresses.is_enabled && {
-				location: `${address.title}\n${address.address}, ${address.city.title}, ${address.country.title}`,
+				location: `${address.title}\n${address.address}, ${address.city.title}, ${address.country.title}`.replaceAll(
+					'"',
+					''
+				),
 				geo: { lat: address.latitude, lon: address.longitude },
-				appleStructuredLocation: { title: address.title, radius: 100 },
+				appleStructuredLocation: { title: address.title.replaceAll('"', ''), radius: 100 },
 			}),
 			url: i.fixed_post ? `https://vk.com/wall-${i.id}_${i.fixed_post}` : `https://vk.com/${i.screen_name}`,
 			uid: `${i.id}`,
