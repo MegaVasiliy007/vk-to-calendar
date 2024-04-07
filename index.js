@@ -11,5 +11,5 @@ if (!process.env.TOKEN) {
 cron.start();
 
 const app = express();
-app.get('/events.ics', (req, res) => res.send(cache.get()));
+app.get('/events.ics', (req, res) => res.setHeader('Content-Type', 'text/calendar').send(cache.get()));
 app.listen(process.env.PORT || 3000, () => console.log(`Listen on :${process.env.PORT || 3000}`));
